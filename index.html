@@ -3,12 +3,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!---Style links-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P">
     <link rel="stylesheet" href="style.css">
+
     <title>Tetris</title>
 </head>
 <body>
     <div class="grid">
+        <!--Game board-->
         <canvas id="board" class="game-board"></canvas>
         <div class="right-column">
           <div>
@@ -21,7 +24,11 @@
           <button onclick="play()" class="play-button">Play</button>
         </div>
       </div>
-
+      <!--- JavaScript scripts--->
+      <script type="text/javascript" src="constants.js"></script>
+      <script type="text/javascript" src="board.js"></script>
+      <script type="text/javascript" src="piece.js"></script>
+      <script type="text/javascript" src="main.js"></script>
       
 </body>
 </html>
