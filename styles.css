@@ -9,6 +9,12 @@
 
   }
 
+  .stats-bar {
+    text-align: center;
+  }
+
+ 
+
   canvas {
     background-color: #eee;
   }
