@@ -7,10 +7,11 @@ class Board {
     requestId;
     time;
 
-    constructor(ctx, ctxNext) {
-      this.ctx = ctx;
-      this.ctxNext = ctxNext;
-      this.init();
+    constructor(ctx, ctxNext, ctxHold) {
+        this.ctx = ctx;
+        this.ctxNext = ctxNext;
+        this.ctxHold = ctxHold;
+        this.init();
     }
 
     init() {
@@ -43,6 +44,12 @@ class Board {
     draw() {
       this.piece.draw();
       this.drawBoard();
+    }
+
+    clearHoldBox() {
+        const { width, height } = this.ctxHold.canvas;
+        this.ctxHold.clearRect(0, 0, width, height);
+        this.ctxHold.piece = false;
     }
 
     drop() {
@@ -135,6 +142,39 @@ class Board {
       });
     }
 
+    swapPieces() {
+        if (!this.ctxHold.piece) {
+            //move current piece to hold and move next piece to current one
+            this.ctxHold.piece = this.piece;
+            this.piece = this.next;
+            this.getNewPiece();
+        } else {
+            //swap current piece with hold
+            let temp = this.piece;
+            this.piece = this.ctxHold.piece;
+            this.ctxHold.piece = temp;
+        }
+        this.ctxHold.piece.ctx = this.ctxHold;
+        this.piece.ctx = this.ctx;
+        this.piece.setStartingPosition();
+        this.hold = this.ctxHold.piece;
+        const { width, height } = this.ctxHold.canvas;
+        this.ctxHold.clearRect(0, 0, width, height);
+        this.ctxHold.piece.x = 0;
+        this.ctxHold.piece.y = 0;
+        this.ctxHold.piece.draw();
+    }
+
+    swap() {
+        //swap oonly once
+        if (this.piece.swapped) {
+            return;
+        }
+        this.swapPieces();
+        this.piece.swapped = true;
+        return this.piece;
+    }
+
     getEmptyGrid() {
       return Array.from({ length: ROWS }, () => Array(COLS).fill(0));
     }
@@ -151,20 +191,30 @@ class Board {
       return this.grid[y] && this.grid[y][x] === 0;
     }
 
-    rotate(piece) {
-      // Clone with JSON for immutability.
-      let p = JSON.parse(JSON.stringify(piece));
-
-      // Transpose matrix
-      for (let y = 0; y < p.shape.length; ++y) {
-        for (let x = 0; x < y; ++x) {
-          [p.shape[x][y], p.shape[y][x]] = [p.shape[y][x], p.shape[x][y]];
+    rotate_right(piece) {
+        let p = JSON.parse(JSON.stringify(piece));
+        if (!piece.hardDropped) {
+            for (let y = 0; y < p.shape.length; y++) {
+                for (let x = 0; x < y; x++) {
+                    [p.shape[x][y], p.shape[y][x]] = [p.shape[y][x], p.shape[x][y]];
+                }
+            }
         }
-      }
+        p.shape.forEach(row => row.reverse());
+        return p;
+    }
 
-      // Reverse the order of the columns.
-      p.shape.forEach(row => row.reverse());
-      return p;
+    rotate_left (piece) {
+        let p = JSON.parse(JSON.stringify(piece));
+        if (!piece.hardDropped) {
+            for (let y = 0; y < p.shape.length; y++) {
+                for (let x = 0; x < y; x++) {
+                    [p.shape[x][y], p.shape[y][x]] = [p.shape[y][x], p.shape[x][y]];
+                }
+            }
+        }
+        p.shape.reverse();
+        return p;
     }
 
     getLinesClearedPoints(lines, level) {
