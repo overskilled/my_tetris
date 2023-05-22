@@ -2,19 +2,46 @@
 ***
 
 ## Task
-TODO - What is the problem? And where is the challenge?
+For this project, it was required to create th efamous tetris game respecting it various features and controls
 
 ## Description
-TODO - How have you solved the problem?
+### Game Specifications
+
+- Playfield is 10×40, where rows above 20 are hidden or obstructed by the field frame to trick the player into thinking it's 10×20.
+
+### Tetrimino colors are as follows :
+
+- Cyan I
+- Yellow O
+- Purple T
+- Green S
+- Red Z
+- Blue J
+- Orange L
+
+### Standard mapping for computer keyboard
+
+- Up arrow is to rotate 90° clockwise.
+- Space to hard drop.
+- C is to hold.
+- Q is to rotate 90° counterclockwise.
+- P is  to pause.
+- ESC is to quit/end game
+- Left, right, and down arrows are for moving left. right and soft drop respectively
 
 ## Installation
-TODO - How to install your project? npm install? make? make re?
+To run the code simply type in your terminal the following
+
+```js
+node html_server.js
+```
+
+
 
 ## Usage
-TODO - How does it work?
-```
-./my_project argument1 argument2
-```
+Just play the game following the controls above and try make your best score ;)
+
+![Demo picture](images/finished%20game.png)
 
 ### The Core Team
 
