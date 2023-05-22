@@ -56,7 +56,7 @@ http.createServer(function (request, response) {
     });
 
 }).listen(port, hostname, () => {
-    console.log("Server running at localhost:8080");
+    console.log("Server running at http://web-b8412d5e8-da42.docode.fi.qwasar.io");
     console.log("Replace XXXXXXXXX by your current workspace ID");
     console.log("(look at the URL of this page and XXXXXXXXX.docode.YYYY.qwasar.io, XXXXXXXXX is your workspace ID and YYYY is your zone)");
 });
