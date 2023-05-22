@@ -93,7 +93,7 @@ function play() {
   if (requestId) {
     cancelAnimationFrame(requestId);
   }
-
+  audio.play()
   animate();
 }
 
